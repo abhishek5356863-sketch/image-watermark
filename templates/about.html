@@ -14,6 +14,17 @@
         .page-content p { margin-bottom: 1.5rem; }
         .page-content ul { margin-left: 1.5rem; margin-bottom: 1.5rem; }
         .page-content li { margin-bottom: 0.5rem; }
+        
+        /* Developer Profile Styling */
+        .dev-card { display: flex; align-items: center; gap: 2rem; margin-top: 2rem; padding: 2rem; background: rgba(255, 255, 255, 0.03); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .dev-photo { width: 120px; height: 120px; border-radius: 60px; background: rgba(0, 230, 138, 0.1); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; flex-shrink: 0; box-shadow: 0 0 20px var(--primary-glow); }
+        .dev-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+        .dev-info p { margin-bottom: 0.3rem; font-size: 0.95rem; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+        .dev-icon { color: var(--primary); width: 20px; }
+        
+        @media (max-width: 600px) {
+            .dev-card { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -46,6 +57,21 @@
 
         <h2>Open Source Commitment</h2>
         <p>We believe in transparency when it comes to security. StealthGuard is open-source, allowing researchers, developers, and security enthusiasts to audit our code and contribute to a more secure future.</p>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 3rem 0;">
+
+        <h2>Meet the Developer</h2>
+        <div class="dev-card">
+            <div class="dev-photo">
+                <span>👨‍💻</span>
+            </div>
+            <div class="dev-info">
+                <h3>Abhishek</h3>
+                <p>Lead Developer & Security Researcher</p>
+                <p><span class="dev-icon">📧</span> abhishek@gmail.com</p>
+                <p><span class="dev-icon">📱</span> +91 9876543211</p>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
