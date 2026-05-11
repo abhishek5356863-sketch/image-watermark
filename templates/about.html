@@ -50,8 +50,8 @@
         }
 
         .dev-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -60,26 +60,43 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 3rem;
-            padding: 2.5rem;
+            gap: 1.5rem;
+            padding: 1.5rem;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .dev-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
         }
 
         .dev-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
             overflow: visible;
             flex-shrink: 0;
+            perspective: 1000px;
+        }
+
+        .dev-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: rotateY(-20deg) rotateX(10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .dev-card:hover .dev-photo img {
+            transform: rotateY(0deg) rotateX(0deg);
         }
 
         .dev-info {
@@ -87,18 +104,18 @@
         }
 
         .dev-info h3 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
             color: #fff;
         }
 
         .dev-info p {
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .dev-info a {
@@ -113,23 +130,13 @@
 
         .dev-icon {
             color: var(--primary);
-            font-size: 1.3rem;
-            width: 20px;
+            font-size: 1rem;
+            width: 18px;
         }
 
-        @media (max-width: 850px) {
-            .dev-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-            }
-
-            .dev-info {
-                text-align: center;
-            }
-
-            .dev-info p {
-                justify-content: center;
+        @media (max-width: 900px) {
+            .dev-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -184,7 +191,7 @@
             <!-- Abhishek's Profile -->
             <div class="dev-card">
                 <div class="dev-photo">
-                    <img src="{{ url_for('static', filename='abhishek.jpeg') }}" alt="Abhishek" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                    <img src="{{ url_for('static', filename='abhishek.jpeg') }}" alt="Abhishek">
                 </div>
                 <div class="dev-info">
                     <h3>Abhishek</h3>
@@ -203,7 +210,7 @@
             <!-- Akshata's Profile -->
             <div class="dev-card">
                 <div class="dev-photo">
-                    <img src="{{ url_for('static', filename='akshata.jpeg') }}" alt="Akshata" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                    <img src="{{ url_for('static', filename='akshata.jpeg') }}" alt="Akshata">
                 </div>
                 <div class="dev-info">
                     <h3>Akshata</h3>
@@ -222,7 +229,7 @@
             <!-- Yuvraj's Profile -->
             <div class="dev-card">
                 <div class="dev-photo">
-                    <img src="{{ url_for('static', filename='yuvraj.jpeg') }}" alt="Yuvraj" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                    <img src="{{ url_for('static', filename='yuvraj.jpeg') }}" alt="Yuvraj">
                 </div>
                 <div class="dev-info">
                     <h3>Yuvraj</h3>
@@ -241,7 +248,7 @@
             <!-- Vasanth's Profile -->
             <div class="dev-card">
                 <div class="dev-photo">
-                    <img src="{{ url_for('static', filename='vasanth.jpeg') }}" alt="Vasanth" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                    <img src="{{ url_for('static', filename='vasanth.jpeg') }}" alt="Vasanth">
                 </div>
                 <div class="dev-info">
                     <h3>Vasanth</h3>
@@ -260,7 +267,7 @@
             <!-- Chanda's Profile -->
             <div class="dev-card">
                 <div class="dev-photo">
-                    <img src="{{ url_for('static', filename='chanda.jpeg') }}" alt="Chanda" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                    <img src="{{ url_for('static', filename='chanda.jpeg') }}" alt="Chanda">
                 </div>
                 <div class="dev-info">
                     <h3>Chanda</h3>
@@ -271,7 +278,7 @@
                     </p>
                     <p>
                         <span class="dev-icon">📱</span>
-                        <a href="tel:+918520852085">+91 8520852085</a>
+                        <a href="tel:+916361938840">+91 9999999999</a>
                     </p>
                 </div>
             </div>
