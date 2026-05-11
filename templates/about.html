@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="/static/landing.css">
     <style>
         .page-content {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 4rem auto;
-            padding: 2rem 5%;
+            padding: 3rem 5%;
             background: rgba(18, 22, 38, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
             line-height: 1.8;
             color: #e2e8f0;
         }
@@ -51,9 +51,18 @@
 
         .dev-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-top: 3rem;
+            justify-content: center;
+        }
+
+        /* Make the 3rd card (Yuvaraj) span both columns and center it */
+        .dev-card:nth-child(3) {
+            grid-column: 1 / span 2;
+            justify-self: center;
+            width: 100%;
+            max-width: 450px;
         }
 
         .dev-card {
