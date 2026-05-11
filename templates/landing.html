@@ -63,7 +63,62 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 3D Model Container -->
+        <div id="three-container" style="position: absolute; top: 0; right: 0; width: 50%; height: 100%; z-index: -1; opacity: 0.6; pointer-events: none;"></div>
     </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const container = document.getElementById('three-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Create a wireframe sphere representing "Data"
+        const geometry = new THREE.IcosahedronGeometry(2, 2);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00e68a, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.4
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Add inner glowing core
+        const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
+        const innerMat = new THREE.MeshBasicMaterial({ 
+            color: 0x7000ff, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.2
+        });
+        const innerSphere = new THREE.Mesh(innerGeo, innerMat);
+        scene.add(innerSphere);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.002;
+            sphere.rotation.y += 0.002;
+            innerSphere.rotation.x -= 0.003;
+            innerSphere.rotation.y -= 0.003;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        animate();
+    </script>
 
     <footer class="footer">
         <div class="footer-content">
