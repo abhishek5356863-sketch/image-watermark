@@ -45,17 +45,69 @@
             margin-bottom: 1.5rem;
         }
 
-        .page-content li { margin-bottom: 0.5rem; }
-        
+        .page-content li {
+            margin-bottom: 0.5rem;
+        }
+
         /* Developer Profile Styling */
-        .dev-card { display: flex; align-items: center; gap: 2rem; margin-top: 2rem; padding: 2.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .dev-photo { width: 140px; height: 140px; border-radius: 20px; overflow: hidden; border: 2px solid var(--primary); flex-shrink: 0; box-shadow: 0 0 20px var(--primary-glow); }
-        .dev-photo img { width: 100%; height: 100%; object-fit: cover; }
-        .dev-info h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
-        .dev-info p { margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-muted); display: flex; align-items: center; gap: 12px; }
-        .dev-info a { color: inherit; text-decoration: none; transition: var(--transition); }
-        .dev-info a:hover { color: var(--primary); }
-        .dev-icon { color: var(--primary); font-size: 1.2rem; width: 20px; }
+        .dev-card {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .dev-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            flex-shrink: 0;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .dev-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dev-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .dev-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dev-info a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .dev-info a:hover {
+            color: var(--primary);
+        }
+
+        .dev-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            width: 20px;
+        }
 
         @media (max-width: 600px) {
             .dev-card {
@@ -113,18 +165,18 @@
         <h2>Meet the Developer</h2>
         <div class="dev-card">
             <div class="dev-photo">
-                <img src="/static/abhishek.png" alt="Abhishek">
+                <img src="{{ url_for('static', filename='abhishek.jpeg') }}" alt="Abhishek">
             </div>
             <div class="dev-info">
                 <h3>Abhishek</h3>
                 <p>Lead Developer & Security Researcher</p>
                 <p>
-                    <span class="dev-icon">📧</span> 
-                    <a href="mailto:abhishekhacker@gmail.com">abhishekhacker@gmail.com</a>
+                    <span class="dev-icon">📧</span>
+                    <a href="mailto:abhishek5356863@gmail.com">abhishekhacker@gmail.com</a>
                 </p>
                 <p>
-                    <span class="dev-icon">📱</span> 
-                    <a href="tel:+917045416257">+91 7045416257</a>
+                    <span class="dev-icon">📱</span>
+                    <a href="tel:+919441395701">+91 7777777777</a>
                 </p>
             </div>
         </div>
