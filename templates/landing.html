@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StealthGuard | The Future of Secure Steganography</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/static/landing.css">
 </head>
+
 <body>
     <!-- Abstract Tech Background -->
     <div class="bg-gradient"></div>
@@ -19,7 +23,8 @@
             <span class="logo-text">StealthGuard</span>
         </div>
         <div class="nav-links">
-            <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank" class="nav-btn secondary">GitHub</a>
+            <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank"
+                class="nav-btn secondary">GitHub</a>
             {% if session.get('user_id') %}
             <a href="/app" class="nav-btn primary">Dashboard</a>
             <a href="/logout" class="nav-btn secondary" style="margin-left:10px;">Logout</a>
@@ -34,9 +39,11 @@
             <div class="badge">Cybersecurity x Data Science</div>
             <h1 class="hero-title">Invisible Security for <br><span class="gradient-text">Visible Data.</span></h1>
             <p class="hero-subtitle">
-                StealthGuard merges military-grade AES-256 encryption with advanced Least Significant Bit (LSB) steganography. Hide your most sensitive text inside ordinary images—invisible to the naked eye, mathematically impossible to crack without the key.
+                StealthGuard merges military-grade AES-256 encryption with advanced Least Significant Bit (LSB)
+                steganography. Hide your most sensitive text inside ordinary images—invisible to the naked eye,
+                mathematically impossible to crack without the key.
             </p>
-            
+
             <div class="cta-group">
                 {% if session.get('user_id') %}
                 <a href="/app" class="btn btn-glow">Enter Dashboard <span class="arrow">→</span></a>
@@ -49,7 +56,8 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔐</div>
                     <h3>AES Encryption</h3>
-                    <p>Powered by Fernet cryptography and PBKDF2. Your data is scrambled before it ever touches the image.</p>
+                    <p>Powered by Fernet cryptography and PBKDF2. Your data is scrambled before it ever touches the
+                        image.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🖼️</div>
@@ -59,13 +67,16 @@
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3>Lossless Pipeline</h3>
-                    <p>Engineered to process and save pure PNG formats, guaranteeing your hidden bits are never compressed away.</p>
+                    <p>Engineered to process and save pure PNG formats, guaranteeing your hidden bits are never
+                        compressed away.</p>
                 </div>
             </div>
         </div>
-        
+
         <!-- 3D Model Container -->
-        <div id="three-container" style="position: absolute; top: 0; right: 0; width: 50%; height: 100%; z-index: -1; opacity: 0.6; pointer-events: none;"></div>
+        <div id="three-container"
+            style="position: absolute; top: 0; right: 0; width: 50%; height: 100%; z-index: -1; opacity: 0.6; pointer-events: none;">
+        </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -74,14 +85,14 @@
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
+
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
         // Create a wireframe sphere representing "Data"
         const geometry = new THREE.IcosahedronGeometry(2, 2);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x00e68a, 
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00e68a,
             wireframe: true,
             transparent: true,
             opacity: 0.4
@@ -91,8 +102,8 @@
 
         // Add inner glowing core
         const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
-        const innerMat = new THREE.MeshBasicMaterial({ 
-            color: 0x7000ff, 
+        const innerMat = new THREE.MeshBasicMaterial({
+            color: 0x7000ff,
             wireframe: true,
             transparent: true,
             opacity: 0.2
@@ -129,12 +140,11 @@
                 </div>
                 <p class="footer-tagline">Military-grade steganography & encryption for the modern web.</p>
             </div>
-            
+
             <div class="footer-links">
                 <a href="/about">About Us</a>
                 <a href="/privacy">Privacy Policy</a>
                 <a href="/terms">Terms & Conditions</a>
-                <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank">Open Source</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -142,4 +152,5 @@
         </div>
     </footer>
 </body>
+
 </html>

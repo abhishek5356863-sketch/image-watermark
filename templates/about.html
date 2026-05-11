@@ -50,17 +50,17 @@
         }
 
         .dev-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .dev-card {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            text-align: center;
+            gap: 3rem;
             padding: 2.5rem;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
@@ -70,7 +70,7 @@
         }
 
         .dev-card:hover {
-            transform: translateY(-5px);
+            transform: scale(1.02);
             background: rgba(255, 255, 255, 0.05);
         }
 
@@ -79,23 +79,26 @@
             height: 200px;
             border-radius: 20px;
             overflow: visible;
-            margin-bottom: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .dev-info {
+            text-align: left;
         }
 
         .dev-info h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
             color: #fff;
         }
 
         .dev-info p {
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .dev-info a {
@@ -110,13 +113,21 @@
 
         .dev-icon {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             width: 20px;
         }
 
-        @media (max-width: 768px) {
-            .dev-grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 850px) {
+            .dev-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .dev-info {
+                text-align: center;
+            }
+            .dev-info p {
+                justify-content: center;
             }
         }
     </style>
