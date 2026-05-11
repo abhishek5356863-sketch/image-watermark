@@ -17,7 +17,6 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
 
@@ -57,17 +56,14 @@ def index():
 def register():
     """Handles user registration."""
     if request.method == 'POST':
-        username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         
-        if User.query.filter_by(username=username).first():
-            return render_template('register.html', error="Username already exists")
         if User.query.filter_by(email=email).first():
             return render_template('register.html', error="Email already registered")
             
         hashed_pw = generate_password_hash(password)
-        new_user = User(username=username, email=email, password_hash=hashed_pw)
+        new_user = User(email=email, password_hash=hashed_pw)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
@@ -84,7 +80,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password_hash, password):
             session['user_id'] = user.id
-            session['username'] = user.username
+            session['email'] = user.email
             return redirect(url_for('index'))
             
         return render_template('login.html', error="Invalid email or password")
