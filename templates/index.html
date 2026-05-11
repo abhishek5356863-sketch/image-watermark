@@ -3,100 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StealthGuard | Secure Steganography</title>
-    <!-- Google Fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>StealthGuard | Application</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="background-animation"></div>
-    
-    <div class="container">
-        <header>
-            <div class="logo">
-                <span class="lock-icon">🔒</span>
-                <h1>StealthGuard</h1>
-            </div>
-            <p>Secure your sensitive data inside images using LSB Steganography and AES Encryption.</p>
-        </header>
+    <!-- Abstract Background -->
+    <div class="bg-gradient"></div>
+    <div class="grid-overlay"></div>
 
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('encode')">Hide Data (Encode)</button>
-            <button class="tab-btn" onclick="switchTab('decode')">Extract Data (Decode)</button>
+    <nav class="navbar">
+        <a href="/" class="logo" style="text-decoration: none;">
+            <span class="logo-icon">🛡️</span>
+            <span class="logo-text">StealthGuard</span>
+        </a>
+        <div class="nav-links">
+            <span class="status-badge"><span class="dot"></span> Secure Connection</span>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <div class="sidebar">
+            <h2 class="sidebar-title">Operations</h2>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('encode')">
+                    <span class="icon">🔒</span> Hide Data (Encode)
+                </button>
+                <button class="tab-btn" onclick="switchTab('decode')">
+                    <span class="icon">🔓</span> Extract Data (Decode)
+                </button>
+            </div>
+            
+            <div class="info-panel">
+                <h3>Encryption Standard</h3>
+                <p>AES-256 via Fernet</p>
+                <h3>Steganography</h3>
+                <p>Lossless LSB Encoding</p>
+                <div class="security-level">
+                    <span>Security Level</span>
+                    <span class="level-high">Military Grade</span>
+                </div>
+            </div>
         </div>
 
-        <main>
+        <main class="main-content">
             <!-- ENCODE SECTION -->
-            <section id="encode-section" class="active-section">
+            <section id="encode-section" class="active-section glass-panel">
+                <div class="panel-header">
+                    <h2>Encode Payload</h2>
+                    <p>Embed encrypted text invisibly within an image.</p>
+                </div>
+                
                 <form id="encode-form">
-                    <div class="input-group">
-                        <label for="encode-image">1. Select Target Image</label>
-                        <div class="file-drop-area">
-                            <span class="choose-file-btn">Choose Image</span>
-                            <span class="file-message">or drag and drop here</span>
-                            <input class="file-input" type="file" id="encode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label for="encode-image">Target Image (PNG, JPG, BMP)</label>
+                            <div class="file-drop-area" id="encode-drop">
+                                <div class="drop-icon">🖼️</div>
+                                <span class="choose-file-btn">Browse Files</span>
+                                <span class="file-message">or drag & drop</span>
+                                <input class="file-input" type="file" id="encode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                            </div>
+                            <div id="encode-preview-container" class="preview-container hidden">
+                                <img id="encode-preview" src="#" alt="Preview">
+                            </div>
                         </div>
-                        <div id="encode-preview-container" class="preview-container hidden">
-                            <img id="encode-preview" src="#" alt="Preview">
+
+                        <div class="input-group full-width">
+                            <label for="encode-message">Secret Payload</label>
+                            <textarea id="encode-message" name="message" placeholder="Enter highly confidential data..." rows="4" required></textarea>
+                        </div>
+
+                        <div class="input-group full-width">
+                            <label for="encode-password">Encryption Key (Password)</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="encode-password" name="password" placeholder="Enter a strong AES key" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('encode-password')">👁️</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label for="encode-message">2. Enter Secret Message</label>
-                        <textarea id="encode-message" name="message" placeholder="Type the confidential data you want to hide..." rows="4" required></textarea>
+                    <div class="action-footer">
+                        <button type="submit" class="submit-btn" id="encode-submit">
+                            <span class="btn-text">Execute Encryption</span>
+                            <span class="loader hidden"></span>
+                        </button>
                     </div>
-
-                    <div class="input-group">
-                        <label for="encode-password">3. Encryption Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="encode-password" name="password" placeholder="Create a strong password" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('encode-password')">👁️</button>
-                        </div>
-                        <small>Don't forget this! It uses PBKDF2 + AES for maximum security.</small>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="encode-submit">
-                        <span class="btn-text">Encrypt & Hide</span>
-                        <span class="loader hidden"></span>
-                    </button>
                 </form>
                 <div id="encode-result" class="result-message hidden"></div>
             </section>
 
             <!-- DECODE SECTION -->
-            <section id="decode-section" class="hidden-section">
+            <section id="decode-section" class="hidden-section glass-panel">
+                <div class="panel-header">
+                    <h2>Extract & Decrypt</h2>
+                    <p>Recover hidden payloads from watermarked images.</p>
+                </div>
+
                 <form id="decode-form">
-                    <div class="input-group">
-                        <label for="decode-image">1. Select Watermarked Image</label>
-                        <div class="file-drop-area">
-                            <span class="choose-file-btn">Choose Image</span>
-                            <span class="file-message">or drag and drop here</span>
-                            <input class="file-input" type="file" id="decode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label for="decode-image">Watermarked Image (PNG only)</label>
+                            <div class="file-drop-area" id="decode-drop">
+                                <div class="drop-icon">🔍</div>
+                                <span class="choose-file-btn">Browse Files</span>
+                                <span class="file-message">or drag & drop</span>
+                                <input class="file-input" type="file" id="decode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                            </div>
+                            <div id="decode-preview-container" class="preview-container hidden">
+                                <img id="decode-preview" src="#" alt="Preview">
+                            </div>
                         </div>
-                        <div id="decode-preview-container" class="preview-container hidden">
-                            <img id="decode-preview" src="#" alt="Preview">
+
+                        <div class="input-group full-width">
+                            <label for="decode-password">Decryption Key (Password)</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="decode-password" name="password" placeholder="Enter the AES key" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('decode-password')">👁️</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label for="decode-password">2. Decryption Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="decode-password" name="password" placeholder="Enter the password to unlock" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('decode-password')">👁️</button>
-                        </div>
+                    <div class="action-footer">
+                        <button type="submit" class="submit-btn" id="decode-submit">
+                            <span class="btn-text">Extract Payload</span>
+                            <span class="loader hidden"></span>
+                        </button>
                     </div>
-
-                    <button type="submit" class="submit-btn" id="decode-submit">
-                        <span class="btn-text">Extract & Decrypt</span>
-                        <span class="loader hidden"></span>
-                    </button>
                 </form>
                 
                 <div id="decode-result" class="result-box hidden">
-                    <h3>Unlocked Message:</h3>
+                    <div class="result-header">
+                        <h3><span class="icon">🔓</span> Payload Recovered</h3>
+                        <button id="copy-btn" class="icon-btn" title="Copy to clipboard">📋 Copy</button>
+                    </div>
                     <div class="message-content">
                         <p id="decrypted-text"></p>
-                        <button id="copy-btn" class="icon-btn" title="Copy to clipboard">📋</button>
                     </div>
                 </div>
                 <div id="decode-error" class="error-message hidden"></div>
