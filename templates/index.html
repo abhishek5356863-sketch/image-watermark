@@ -27,6 +27,7 @@
     <div class="dashboard-container">
         
         <div class="sidebar">
+            <div id="sidebar-3d-container" style="width: 100%; height: 150px; margin-bottom: -20px; opacity: 0.8;"></div>
             <h2 class="sidebar-title">Operations</h2>
             <div class="tabs">
                 <button class="tab-btn active" id="tab-encode" onclick="switchTab('encode')">
@@ -257,6 +258,49 @@
             renderer.render(scene, camera);
         }
         animate();
+
+        // Sidebar 3D Shield Logic
+        const sbContainer = document.getElementById('sidebar-3d-container');
+        const sbScene = new THREE.Scene();
+        const sbCamera = new THREE.PerspectiveCamera(75, sbContainer.clientWidth / sbContainer.clientHeight, 0.1, 1000);
+        const sbRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        sbRenderer.setSize(sbContainer.clientWidth, sbContainer.clientHeight);
+        sbContainer.appendChild(sbRenderer.domElement);
+
+        // Create a Shield-like 3D Shape (Octahedron for a tech look)
+        const shieldGeo = new THREE.OctahedronGeometry(1.2, 0);
+        const shieldMat = new THREE.MeshPhongMaterial({ 
+            color: 0x00e68a, 
+            emissive: 0x004422,
+            shininess: 100,
+            flatShading: true,
+            transparent: true,
+            opacity: 0.9
+        });
+        const shield = new THREE.Mesh(shieldGeo, shieldMat);
+        sbScene.add(shield);
+
+        // Add lighting for the "metal" look
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(5, 5, 5);
+        sbScene.add(light);
+        sbScene.add(new THREE.AmbientLight(0x404040));
+
+        sbCamera.position.z = 3;
+
+        function animateSidebar() {
+            requestAnimationFrame(animateSidebar);
+            shield.rotation.y += 0.015;
+            shield.rotation.z += 0.005;
+            
+            // Pulse effect
+            const scale = 1 + Math.sin(Date.now() * 0.002) * 0.05;
+            shield.scale.set(scale, scale, scale);
+            
+            sbRenderer.render(sbScene, sbCamera);
+        }
+        animateSidebar();
     </script>
 </body>
 </html>
