@@ -164,8 +164,8 @@
 
         <h2>Meet the Developer</h2>
         <div class="dev-card">
-            <div class="dev-photo">
-                <img src="{{ url_for('static', filename='abhishek.jpeg') }}" alt="Abhishek">
+            <div class="dev-photo" id="photo-3d-container" style="border: none; background: none; box-shadow: none;">
+                <!-- 3D Canvas will be injected here -->
             </div>
             <div class="dev-info">
                 <h3>Abhishek</h3>
@@ -202,6 +202,57 @@
             <p>&copy; 2026 StealthGuard. All rights reserved.</p>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const photoContainer = document.getElementById('photo-3d-container');
+        const photoScene = new THREE.Scene();
+        const photoCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const photoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        photoRenderer.setSize(140, 140);
+        photoContainer.appendChild(photoRenderer.domElement);
+
+        // Load the profile photo as a texture
+        const loader = new THREE.TextureLoader();
+        loader.load("{{ url_for('static', filename='abhishek.jpeg') }}", (texture) => {
+            const photoGeo = new THREE.PlaneGeometry(3, 3);
+            const photoMat = new THREE.MeshBasicMaterial({ 
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true
+            });
+            const photoPlane = new THREE.Mesh(photoGeo, photoMat);
+            photoScene.add(photoPlane);
+
+            // Add a glowing 3D border (wireframe plane slightly behind)
+            const borderGeo = new THREE.PlaneGeometry(3.2, 3.2);
+            const borderMat = new THREE.MeshBasicMaterial({ 
+                color: 0x00e68a, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            const borderPlane = new THREE.Mesh(borderGeo, borderMat);
+            borderPlane.position.z = -0.1;
+            photoScene.add(borderPlane);
+
+            photoCamera.position.z = 4;
+
+            function animatePhoto() {
+                requestAnimationFrame(animatePhoto);
+                
+                // Slow floating and tilting animation
+                photoPlane.rotation.y = Math.sin(Date.now() * 0.001) * 0.2;
+                photoPlane.rotation.x = Math.cos(Date.now() * 0.001) * 0.1;
+                
+                borderPlane.rotation.y = photoPlane.rotation.y;
+                borderPlane.rotation.x = photoPlane.rotation.x;
+                
+                photoRenderer.render(photoScene, photoCamera);
+            }
+            animatePhoto();
+        });
+    </script>
 </body>
 
 </html>
