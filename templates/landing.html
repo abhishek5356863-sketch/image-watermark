@@ -20,7 +20,12 @@
         </div>
         <div class="nav-links">
             <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank" class="nav-btn secondary">GitHub</a>
-            <a href="/app" class="nav-btn primary">Launch App</a>
+            {% if session.get('user_id') %}
+            <a href="/app" class="nav-btn primary">Dashboard</a>
+            <a href="/logout" class="nav-btn secondary" style="margin-left:10px;">Logout</a>
+            {% else %}
+            <a href="/login" class="nav-btn primary">Login</a>
+            {% endif %}
         </div>
     </nav>
 
@@ -33,7 +38,11 @@
             </p>
             
             <div class="cta-group">
-                <a href="/app" class="btn btn-glow">Start Hiding Data <span class="arrow">→</span></a>
+                {% if session.get('user_id') %}
+                <a href="/app" class="btn btn-glow">Enter Dashboard <span class="arrow">→</span></a>
+                {% else %}
+                <a href="/login" class="btn btn-glow">Start Hiding Data <span class="arrow">→</span></a>
+                {% endif %}
             </div>
 
             <div class="features-grid">
