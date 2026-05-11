@@ -33,6 +33,21 @@ def index():
     """Renders the main steganography tool."""
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    """Renders the About Us page."""
+    return render_template('about.html')
+
+@app.route('/privacy')
+def privacy():
+    """Renders the Privacy Policy page."""
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    """Renders the Terms & Conditions page."""
+    return render_template('terms.html')
+
 @app.route('/api/encode', methods=['POST'])
 def handle_encode():
     """Handles the API request to hide a message in an image."""

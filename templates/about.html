@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | StealthGuard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/landing.css">
+    <style>
+        .page-content { max-width: 800px; margin: 4rem auto; padding: 2rem 5%; background: rgba(18, 22, 38, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; backdrop-filter: blur(10px); line-height: 1.8; color: #e2e8f0; }
+        .page-content h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #fff; }
+        .page-content h2 { font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+        .page-content p { margin-bottom: 1.5rem; }
+        .page-content ul { margin-left: 1.5rem; margin-bottom: 1.5rem; }
+        .page-content li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="grid-overlay"></div>
+
+    <nav class="navbar">
+        <a href="/" style="text-decoration: none;" class="logo">
+            <span class="logo-icon">🛡️</span>
+            <span class="logo-text">StealthGuard</span>
+        </a>
+        <div class="nav-links">
+            <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank" class="nav-btn secondary">GitHub</a>
+            <a href="/app" class="nav-btn primary">Launch App</a>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <h1>About Us</h1>
+        <p>Welcome to <strong>StealthGuard</strong>, a cutting-edge interdisciplinary project engineered at the intersection of Data Science and Cybersecurity. Our mission is to provide accessible, military-grade data protection through advanced steganography.</p>
+        
+        <h2>Our Vision</h2>
+        <p>In an era where digital privacy is constantly under threat, traditional encryption sometimes isn't enough—sometimes the best way to protect data is to hide the fact that it even exists. StealthGuard was built to give users the power to seamlessly and invisibly secure their most sensitive communications within ordinary image files.</p>
+        
+        <h2>The Technology</h2>
+        <ul>
+            <li><strong>Advanced Cryptography:</strong> We utilize the robust <code>cryptography</code> library in Python, leveraging Fernet symmetric encryption and PBKDF2 key derivation to ensure your payload is scrambled into mathematical noise.</li>
+            <li><strong>Lossless Steganography:</strong> Our custom Least Significant Bit (LSB) encoding algorithm manipulates image pixels at a microscopic level, rendering changes completely undetectable to the human eye.</li>
+        </ul>
+
+        <h2>Open Source Commitment</h2>
+        <p>We believe in transparency when it comes to security. StealthGuard is open-source, allowing researchers, developers, and security enthusiasts to audit our code and contribute to a more secure future.</p>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-icon">🛡️</span>
+                    <span class="logo-text">StealthGuard</span>
+                </div>
+                <p class="footer-tagline">Military-grade steganography & encryption for the modern web.</p>
+            </div>
+            <div class="footer-links">
+                <a href="/about">About Us</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms & Conditions</a>
+                <a href="https://github.com/abhishek5356863-sketch/image-watermark" target="_blank">Open Source</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 StealthGuard. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
