@@ -49,17 +49,29 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Developer Profile Styling */
-        .dev-card {
-            display: flex;
-            align-items: center;
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+        }
+
+        .dev-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             padding: 2.5rem;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .dev-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .dev-photo {
@@ -67,13 +79,7 @@
             height: 200px;
             border-radius: 20px;
             overflow: visible;
-            flex-shrink: 0;
-        }
-
-        .dev-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            margin-bottom: 1.5rem;
         }
 
         .dev-info h3 {
@@ -88,6 +94,7 @@
             color: var(--text-muted);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
 
@@ -107,10 +114,9 @@
             width: 20px;
         }
 
-        @media (max-width: 600px) {
-            .dev-card {
-                flex-direction: column;
-                text-align: center;
+        @media (max-width: 768px) {
+            .dev-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -160,22 +166,40 @@
 
         <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 3rem 0;">
 
-        <h2>Meet the Developer</h2>
-        <div class="dev-card">
-            <div class="dev-photo" id="photo-3d-container" style="border: none; background: none; box-shadow: none;">
-                <!-- 3D Canvas will be injected here -->
+        <h2>Meet the Developers</h2>
+        <div class="dev-grid">
+            <!-- Abhishek's Profile -->
+            <div class="dev-card">
+                <div class="dev-photo" id="photo-3d-container"></div>
+                <div class="dev-info">
+                    <h3>Abhishek</h3>
+                    <p>Lead Developer & Security Researcher</p>
+                    <p>
+                        <span class="dev-icon">📧</span>
+                        <a href="mailto:abhishek5356863@gmail.com">abhishekhacker@gmail.com</a>
+                    </p>
+                    <p>
+                        <span class="dev-icon">📱</span>
+                        <a href="tel:+919441395701">+91 7777777777</a>
+                    </p>
+                </div>
             </div>
-            <div class="dev-info">
-                <h3>Abhishek</h3>
-                <p>Lead Developer & Security Researcher</p>
-                <p>
-                    <span class="dev-icon">📧</span>
-                    <a href="mailto:abhishek5356863@gmail.com">abhishekhacker@gmail.com</a>
-                </p>
-                <p>
-                    <span class="dev-icon">📱</span>
-                    <a href="tel:+919441395701">+91 7777777777</a>
-                </p>
+
+            <!-- Akshata's Profile -->
+            <div class="dev-card">
+                <div class="dev-photo" id="akshata-3d-container"></div>
+                <div class="dev-info">
+                    <h3>Akshata</h3>
+                    <p>Security Analyst & System Designer</p>
+                    <p>
+                        <span class="dev-icon">📧</span>
+                        <a href="mailto:abhiakshu@love.com">abhiakshu@love.com</a>
+                    </p>
+                    <p>
+                        <span class="dev-icon">📱</span>
+                        <a href="tel:+916969696969">+91 6969696969</a>
+                    </p>
+                </div>
             </div>
         </div>
     </main>
@@ -251,6 +275,48 @@
             }
             animatePhoto();
         });
+
+        // Akshata's 3D Component
+        const akContainer = document.getElementById('akshata-3d-container');
+        const akScene = new THREE.Scene();
+        const akCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const akRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        akRenderer.setSize(200, 200);
+        akContainer.appendChild(akRenderer.domElement);
+
+        // For now, create a beautiful 3D Heart or Crystal for Akshata until photo is provided
+        const akGeo = new THREE.IcosahedronGeometry(1.5, 0);
+        const akMat = new THREE.MeshPhongMaterial({ 
+            color: 0xff3366, 
+            emissive: 0x440022,
+            shininess: 100,
+            flatShading: true,
+            transparent: true,
+            opacity: 0.9
+        });
+        const akMesh = new THREE.Mesh(akGeo, akMat);
+        akScene.add(akMesh);
+
+        const akLight = new THREE.PointLight(0xffffff, 1, 100);
+        akLight.position.set(5, 5, 5);
+        akScene.add(akLight);
+        akScene.add(new THREE.AmbientLight(0x404040));
+
+        akCamera.position.z = 4;
+
+        function animateAkshata() {
+            requestAnimationFrame(animateAkshata);
+            akMesh.rotation.y += 0.02;
+            akMesh.rotation.x += 0.01;
+            
+            // Pulse effect
+            const scale = 1 + Math.sin(Date.now() * 0.002) * 0.1;
+            akMesh.scale.set(scale, scale, scale);
+            
+            akRenderer.render(akScene, akCamera);
+        }
+        animateAkshata();
     </script>
 </body>
 
