@@ -388,57 +388,7 @@
         }
         animateAkshata();
 
-        // Yuvraj's 3D Component
-        const yuvContainer = document.getElementById('yuvraj-3d-container');
-        const yuvScene = new THREE.Scene();
-        const yuvCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-        const yuvRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        yuvRenderer.setSize(200, 200);
-        yuvContainer.appendChild(yuvRenderer.domElement);
-
-        loader.load("{{ url_for('static', filename='yuvraj.jpeg') }}", (texture) => {
-            const yuvGeo = new THREE.PlaneGeometry(3.5, 3.5);
-            const yuvMat = new THREE.MeshBasicMaterial({ 
-                map: texture,
-                side: THREE.DoubleSide,
-                transparent: true
-            });
-            const yuvPlane = new THREE.Mesh(yuvGeo, yuvMat);
-            yuvScene.add(yuvPlane);
-
-            const bGeo = new THREE.PlaneGeometry(3.7, 3.7);
-            const bMat = new THREE.MeshBasicMaterial({ 
-                color: 0x00e68a, 
-                wireframe: true,
-                transparent: true,
-                opacity: 0.6
-            });
-            const bPlane = new THREE.Mesh(bGeo, bMat);
-            bPlane.position.z = -0.05;
-            yuvScene.add(bPlane);
-
-            yuvCamera.position.z = 4.5;
-
-            function animateYuvraj() {
-                requestAnimationFrame(animateYuvraj);
-                yuvPlane.rotation.y += 0.01;
-                bPlane.rotation.y = yuvPlane.rotation.y;
-                yuvPlane.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-                bPlane.rotation.x = yuvPlane.rotation.x;
-                yuvRenderer.render(yuvScene, yuvCamera);
-            }
-            animateYuvraj();
-        }, undefined, () => {
-            // Fallback if image not found
-            const yGeo = new THREE.IcosahedronGeometry(1.5, 0);
-            const yMat = new THREE.MeshPhongMaterial({ color: 0x0077ff, wireframe: true });
-            const yMesh = new THREE.Mesh(yGeo, yMat);
-            yuvScene.add(yMesh);
-            yuvCamera.position.z = 4;
-            function anim() { requestAnimationFrame(anim); yMesh.rotation.y += 0.02; yuvRenderer.render(yuvScene, yuvCamera); }
-            anim();
-        });
+        animateAkshata();
     </script>
 </body>
 
