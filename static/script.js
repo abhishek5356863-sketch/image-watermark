@@ -1,19 +1,19 @@
-// Tab Switching Logic
 function switchTab(tabName) {
     // Update buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    event.target.classList.add('active');
+    document.getElementById(`tab-${tabName}`).classList.add('active');
 
     // Update sections
-    document.getElementById('encode-section').classList.remove('active-section');
-    document.getElementById('decode-section').classList.remove('active-section');
-    document.getElementById('encode-section').classList.add('hidden-section');
-    document.getElementById('decode-section').classList.add('hidden-section');
+    document.querySelectorAll('.main-content section').forEach(section => {
+        section.classList.remove('active-section');
+        section.classList.add('hidden-section');
+    });
 
-    document.getElementById(`${tabName}-section`).classList.remove('hidden-section');
-    document.getElementById(`${tabName}-section`).classList.add('active-section');
+    const activeSection = document.getElementById(`${tabName}-section`);
+    activeSection.classList.remove('hidden-section');
+    activeSection.classList.add('active-section');
 }
 
 // Password Visibility Toggle

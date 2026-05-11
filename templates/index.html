@@ -29,11 +29,14 @@
         <div class="sidebar">
             <h2 class="sidebar-title">Operations</h2>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('encode')">
+                <button class="tab-btn active" id="tab-encode" onclick="switchTab('encode')">
                     <span class="icon">🔒</span> Hide Data (Encode)
                 </button>
-                <button class="tab-btn" onclick="switchTab('decode')">
+                <button class="tab-btn" id="tab-decode" onclick="switchTab('decode')">
                     <span class="icon">🔓</span> Extract Data (Decode)
+                </button>
+                <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
+                    <span class="icon">👤</span> User Profile
                 </button>
             </div>
             
@@ -145,6 +148,64 @@
                     </div>
                 </div>
                 <div id="decode-error" class="error-message hidden"></div>
+            </section>
+            
+            <!-- PROFILE SECTION -->
+            <section id="profile-section" class="hidden-section glass-panel">
+                <div class="panel-header">
+                    <h2>User Profile</h2>
+                    <p>Manage your account settings and security preferences.</p>
+                </div>
+                
+                <div class="profile-dashboard">
+                    <div class="profile-header">
+                        <div class="avatar">
+                            <span class="avatar-icon">👤</span>
+                        </div>
+                        <div class="profile-info">
+                            <h3>{{ session.get('email') }}</h3>
+                            <p class="role">Operative Level: Alpha</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-label">System Access</span>
+                            <span class="stat-value">Authorized</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Security Protocol</span>
+                            <span class="stat-value">AES-256</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Account Status</span>
+                            <span class="stat-value" style="color: var(--primary);">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-text">
+                                <h4>Email Notification</h4>
+                                <p>Receive alerts on security breaches</p>
+                            </div>
+                            <span class="toggle-placeholder">Enabled</span>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-text">
+                                <h4>Two-Factor Authentication</h4>
+                                <p>Add an extra layer of security</p>
+                            </div>
+                            <span class="toggle-placeholder">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="action-footer" style="justify-content: flex-start; gap: 15px;">
+                        <a href="{{ url_for('logout') }}" class="submit-btn" style="text-decoration: none;">
+                            Logout Session
+                        </a>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
