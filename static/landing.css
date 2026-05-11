@@ -19,6 +19,12 @@
 body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--bg-dark);
+    background-image: 
+        linear-gradient(rgba(7, 9, 15, 0.8), rgba(7, 9, 15, 0.9)),
+        url('/static/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text-main);
     min-height: 100vh;
     overflow-x: hidden;
