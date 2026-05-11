@@ -63,13 +63,11 @@
         }
 
         .dev-photo {
-            width: 140px;
-            height: 140px;
+            width: 200px;
+            height: 200px;
             border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid var(--primary);
+            overflow: visible;
             flex-shrink: 0;
-            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .dev-photo img {
@@ -209,13 +207,13 @@
         const photoCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
         const photoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
-        photoRenderer.setSize(140, 140);
+        photoRenderer.setSize(200, 200);
         photoContainer.appendChild(photoRenderer.domElement);
 
         // Load the profile photo as a texture
         const loader = new THREE.TextureLoader();
         loader.load("{{ url_for('static', filename='abhishek.jpeg') }}", (texture) => {
-            const photoGeo = new THREE.PlaneGeometry(3, 3);
+            const photoGeo = new THREE.PlaneGeometry(3.5, 3.5);
             const photoMat = new THREE.MeshBasicMaterial({ 
                 map: texture,
                 side: THREE.DoubleSide,
@@ -225,27 +223,28 @@
             photoScene.add(photoPlane);
 
             // Add a glowing 3D border (wireframe plane slightly behind)
-            const borderGeo = new THREE.PlaneGeometry(3.2, 3.2);
+            const borderGeo = new THREE.PlaneGeometry(3.7, 3.7);
             const borderMat = new THREE.MeshBasicMaterial({ 
                 color: 0x00e68a, 
                 wireframe: true,
                 transparent: true,
-                opacity: 0.5
+                opacity: 0.6
             });
             const borderPlane = new THREE.Mesh(borderGeo, borderMat);
-            borderPlane.position.z = -0.1;
+            borderPlane.position.z = -0.05;
             photoScene.add(borderPlane);
 
-            photoCamera.position.z = 4;
+            photoCamera.position.z = 4.5;
 
             function animatePhoto() {
                 requestAnimationFrame(animatePhoto);
                 
-                // Slow floating and tilting animation
-                photoPlane.rotation.y = Math.sin(Date.now() * 0.001) * 0.2;
-                photoPlane.rotation.x = Math.cos(Date.now() * 0.001) * 0.1;
-                
+                // Continuous 360-degree rotation
+                photoPlane.rotation.y += 0.01;
                 borderPlane.rotation.y = photoPlane.rotation.y;
+                
+                // Add a slight tilt for depth
+                photoPlane.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
                 borderPlane.rotation.x = photoPlane.rotation.x;
                 
                 photoRenderer.render(photoScene, photoCamera);
