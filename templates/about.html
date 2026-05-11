@@ -123,9 +123,11 @@
                 text-align: center;
                 gap: 1.5rem;
             }
+
             .dev-info {
                 text-align: center;
             }
+
             .dev-info p {
                 justify-content: center;
             }
@@ -204,11 +206,28 @@
                     <p>Security Analyst & System Designer</p>
                     <p>
                         <span class="dev-icon">📧</span>
-                        <a href="mailto:abhiakshu@love.com">abhiakshu@love.com</a>
+                        <a href="mailto:akshata@gmail.com">akshata@gmail.com</a>
                     </p>
                     <p>
                         <span class="dev-icon">📱</span>
-                        <a href="tel:+916969696969">+91 6969696969</a>
+                        <a href="tel:+919353009090">+91 8888888888</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Yuvraj's Profile -->
+            <div class="dev-card">
+                <div class="dev-photo" id="yuvraj-3d-container"></div>
+                <div class="dev-info">
+                    <h3>Yuvraj</h3>
+                    <p>Full Stack Developer & AI Specialist</p>
+                    <p>
+                        <span class="dev-icon">📧</span>
+                        <a href="mailto:yuvraj@gmail.com">yuvraj@gmail.com</a>
+                    </p>
+                    <p>
+                        <span class="dev-icon">📱</span>
+                        <a href="tel:+918520852085">+91 8520852085</a>
                     </p>
                 </div>
             </div>
@@ -241,7 +260,7 @@
         const photoScene = new THREE.Scene();
         const photoCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
         const photoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
+
         photoRenderer.setSize(200, 200);
         photoContainer.appendChild(photoRenderer.domElement);
 
@@ -249,7 +268,7 @@
         const loader = new THREE.TextureLoader();
         loader.load("{{ url_for('static', filename='abhishek.jpeg') }}", (texture) => {
             const photoGeo = new THREE.PlaneGeometry(3.5, 3.5);
-            const photoMat = new THREE.MeshBasicMaterial({ 
+            const photoMat = new THREE.MeshBasicMaterial({
                 map: texture,
                 side: THREE.DoubleSide,
                 transparent: true
@@ -259,8 +278,8 @@
 
             // Add a glowing 3D border (wireframe plane slightly behind)
             const borderGeo = new THREE.PlaneGeometry(3.7, 3.7);
-            const borderMat = new THREE.MeshBasicMaterial({ 
-                color: 0x00e68a, 
+            const borderMat = new THREE.MeshBasicMaterial({
+                color: 0x00e68a,
                 wireframe: true,
                 transparent: true,
                 opacity: 0.6
@@ -273,15 +292,15 @@
 
             function animatePhoto() {
                 requestAnimationFrame(animatePhoto);
-                
+
                 // Continuous 360-degree rotation
                 photoPlane.rotation.y += 0.01;
                 borderPlane.rotation.y = photoPlane.rotation.y;
-                
+
                 // Add a slight tilt for depth
                 photoPlane.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
                 borderPlane.rotation.x = photoPlane.rotation.x;
-                
+
                 photoRenderer.render(photoScene, photoCamera);
             }
             animatePhoto();
@@ -292,14 +311,14 @@
         const akScene = new THREE.Scene();
         const akCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
         const akRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
+
         akRenderer.setSize(200, 200);
         akContainer.appendChild(akRenderer.domElement);
 
         // For now, create a beautiful 3D Heart or Crystal for Akshata until photo is provided
         const akGeo = new THREE.IcosahedronGeometry(1.5, 0);
-        const akMat = new THREE.MeshPhongMaterial({ 
-            color: 0xff3366, 
+        const akMat = new THREE.MeshPhongMaterial({
+            color: 0xff3366,
             emissive: 0x440022,
             shininess: 100,
             flatShading: true,
@@ -320,14 +339,66 @@
             requestAnimationFrame(animateAkshata);
             akMesh.rotation.y += 0.02;
             akMesh.rotation.x += 0.01;
-            
+
             // Pulse effect
             const scale = 1 + Math.sin(Date.now() * 0.002) * 0.1;
             akMesh.scale.set(scale, scale, scale);
-            
+
             akRenderer.render(akScene, akCamera);
         }
         animateAkshata();
+
+        // Yuvraj's 3D Component
+        const yuvContainer = document.getElementById('yuvraj-3d-container');
+        const yuvScene = new THREE.Scene();
+        const yuvCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const yuvRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        yuvRenderer.setSize(200, 200);
+        yuvContainer.appendChild(yuvRenderer.domElement);
+
+        loader.load("{{ url_for('static', filename='yuvraj.jpeg') }}", (texture) => {
+            const yuvGeo = new THREE.PlaneGeometry(3.5, 3.5);
+            const yuvMat = new THREE.MeshBasicMaterial({ 
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true
+            });
+            const yuvPlane = new THREE.Mesh(yuvGeo, yuvMat);
+            yuvScene.add(yuvPlane);
+
+            const bGeo = new THREE.PlaneGeometry(3.7, 3.7);
+            const bMat = new THREE.MeshBasicMaterial({ 
+                color: 0x00e68a, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            const bPlane = new THREE.Mesh(bGeo, bMat);
+            bPlane.position.z = -0.05;
+            yuvScene.add(bPlane);
+
+            yuvCamera.position.z = 4.5;
+
+            function animateYuvraj() {
+                requestAnimationFrame(animateYuvraj);
+                yuvPlane.rotation.y += 0.01;
+                bPlane.rotation.y = yuvPlane.rotation.y;
+                yuvPlane.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+                bPlane.rotation.x = yuvPlane.rotation.x;
+                yuvRenderer.render(yuvScene, yuvCamera);
+            }
+            animateYuvraj();
+        }, undefined, () => {
+            // Fallback if image not found
+            const yGeo = new THREE.IcosahedronGeometry(1.5, 0);
+            const yMat = new THREE.MeshPhongMaterial({ color: 0x0077ff, wireframe: true });
+            const yMesh = new THREE.Mesh(yGeo, yMat);
+            yuvScene.add(yMesh);
+            yuvCamera.position.z = 4;
+            function anim() { requestAnimationFrame(anim); yMesh.rotation.y += 0.02; yuvRenderer.render(yuvScene, yuvCamera); }
+            anim();
+        });
     </script>
 </body>
 
