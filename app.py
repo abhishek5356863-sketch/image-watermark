@@ -24,8 +24,13 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
+def landing():
+    """Renders the landing page."""
+    return render_template('landing.html')
+
+@app.route('/app')
 def index():
-    """Renders the main web page."""
+    """Renders the main steganography tool."""
     return render_template('index.html')
 
 @app.route('/api/encode', methods=['POST'])
