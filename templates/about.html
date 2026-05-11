@@ -217,7 +217,9 @@
 
             <!-- Yuvraj's Profile -->
             <div class="dev-card">
-                <div class="dev-photo" id="yuvraj-3d-container"></div>
+                <div class="dev-photo">
+                    <img src="{{ url_for('static', filename='yuvraj.jpeg') }}" alt="Yuvraj" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary-glow);">
+                </div>
                 <div class="dev-info">
                     <h3>Yuvraj</h3>
                     <p>Full Stack Developer & AI Specialist</p>
