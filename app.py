@@ -78,16 +78,16 @@ def register():
 def login():
     """Handles user login."""
     if request.method == 'POST':
-        username = request.form.get('username')
+        email = request.form.get('email')
         password = request.form.get('password')
         
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password_hash, password):
             session['user_id'] = user.id
             session['username'] = user.username
             return redirect(url_for('index'))
             
-        return render_template('login.html', error="Invalid username or password")
+        return render_template('login.html', error="Invalid email or password")
         
     return render_template('login.html')
 
