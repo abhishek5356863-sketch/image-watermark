@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'stealthguard-super-secret-key'
 
 # Configure Database
-db_path = os.path.join(tempfile.gettempdir(), 'stealthguard.db')
+db_path = os.path.join(tempfile.gettempdir(), 'stealthguard_v2.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
