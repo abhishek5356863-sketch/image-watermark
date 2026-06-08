@@ -31,6 +31,7 @@ The tool bridges **Data Science** (binary file manipulation) and **Cybersecurity
 | 🔐 **AES-256 Encryption** | Messages are encrypted using the `cryptography` library (Fernet symmetric encryption) with PBKDF2-HMAC-SHA256 key derivation (100,000 iterations). |
 | 🖼️ **Image Steganography** | Hide data inside PNG, JPG, JPEG, and BMP image files. |
 | 🎵 **Audio Steganography** | Hide data inside MP3, WAV, OGG, FLAC, and M4A audio files. |
+| 🎬 **Video Steganography** | Hide data inside MP4 video files. |
 | 📁 **Zero Size Change** | EOF technique keeps the output file size virtually identical to the original — no suspicious bloating. |
 | 🎨 **Premium Dark UI** | Responsive, glassmorphism-styled dark-mode interface with drag-and-drop, live previews, and 3D animations. |
 | 👤 **User Authentication** | Secure login/register system with hashed passwords (Werkzeug) and session management. |
@@ -265,6 +266,11 @@ This project includes a pre-configured `vercel.json` for seamless serverless dep
 | OGG | `.ogg` | ✅ Supported |
 | FLAC | `.flac` | ✅ Supported |
 | M4A | `.m4a` | ✅ Supported |
+
+### Video
+| Format | Extension | Status |
+|---|---|---|
+| MP4 | `.mp4` | ✅ Supported |
 
 ---
 

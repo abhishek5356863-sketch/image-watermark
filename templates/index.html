@@ -47,7 +47,7 @@
                 <h3>Steganography</h3>
                 <p>EOF Stealth Encoding</p>
                 <h3>Supported Media</h3>
-                <p>Images & Audio Files</p>
+                <p>Images, Audio & Video</p>
                 <div class="security-level">
                     <span>Security Level</span>
                     <span class="level-high">Military Grade</span>
@@ -66,16 +66,17 @@
                 <form id="encode-form">
                     <div class="form-grid">
                         <div class="input-group full-width">
-                            <label for="encode-image">Target Media (Image/Audio)</label>
+                            <label for="encode-image">Target Media (Image/Audio/Video)</label>
                             <div class="file-drop-area" id="encode-drop">
                                 <div class="drop-icon">📁</div>
                                 <span class="choose-file-btn">Browse Files</span>
                                 <span class="file-message">or drag & drop</span>
-                                <input class="file-input" type="file" id="encode-image" name="file" accept="image/*,audio/*,.mp3,.wav,.ogg,.flac,.m4a" required>
+                                <input class="file-input" type="file" id="encode-image" name="file" accept="image/*,audio/*,video/mp4,.mp3,.wav,.ogg,.flac,.m4a,.mp4" required>
                             </div>
                             <div id="encode-preview-container" class="preview-container hidden">
                                 <img id="encode-preview" src="#" alt="Preview" class="hidden">
                                 <audio id="encode-preview-audio" controls class="hidden" style="width: 100%; margin-top: 10px;"></audio>
+                                <video id="encode-preview-video" controls class="hidden" style="width: 100%; margin-top: 10px; border-radius: 8px;"></video>
                                 <button type="button" class="remove-image-btn" onclick="removeImage('encode')" title="Remove Media">✖</button>
                             </div>
                         </div>
@@ -119,11 +120,12 @@
                                 <div class="drop-icon">🔍</div>
                                 <span class="choose-file-btn">Browse Files</span>
                                 <span class="file-message">or drag & drop</span>
-                                <input class="file-input" type="file" id="decode-image" name="file" accept="image/*,audio/*,.mp3,.wav,.ogg,.flac,.m4a" required>
+                                <input class="file-input" type="file" id="decode-image" name="file" accept="image/*,audio/*,video/mp4,.mp3,.wav,.ogg,.flac,.m4a,.mp4" required>
                             </div>
                             <div id="decode-preview-container" class="preview-container hidden">
                                 <img id="decode-preview" src="#" alt="Preview" class="hidden">
                                 <audio id="decode-preview-audio" controls class="hidden" style="width: 100%; margin-top: 10px;"></audio>
+                                <video id="decode-preview-video" controls class="hidden" style="width: 100%; margin-top: 10px; border-radius: 8px;"></video>
                                 <button type="button" class="remove-image-btn" onclick="removeImage('decode')" title="Remove Media">✖</button>
                             </div>
                         </div>

@@ -26,13 +26,14 @@ function togglePassword(inputId) {
     }
 }
 
-// Media Preview and Drag/Drop Logic for both forms (Image + Audio)
+// Media Preview and Drag/Drop Logic for both forms (Image + Audio + Video)
 ['encode', 'decode'].forEach(prefix => {
     const fileInput = document.getElementById(`${prefix}-image`);
     const dropArea = fileInput.closest('.file-drop-area');
     const previewContainer = document.getElementById(`${prefix}-preview-container`);
     const previewImg = document.getElementById(`${prefix}-preview`);
     const previewAudio = document.getElementById(`${prefix}-preview-audio`);
+    const previewVideo = document.getElementById(`${prefix}-preview-video`);
     const fileMessage = dropArea.querySelector('.file-message');
 
     // Handle Drag and Drop visuals
@@ -70,9 +71,10 @@ function togglePassword(inputId) {
             const file = files[0];
             fileMessage.textContent = file.name;
 
-            // Hide both previews first
+            // Hide all previews first
             previewImg.classList.add('hidden');
             previewAudio.classList.add('hidden');
+            previewVideo.classList.add('hidden');
 
             if (file.type.startsWith('image/')) {
                 // Show image preview
@@ -89,8 +91,14 @@ function togglePassword(inputId) {
                 previewAudio.src = url;
                 previewAudio.classList.remove('hidden');
                 previewContainer.classList.remove('hidden');
+            } else if (file.type.startsWith('video/')) {
+                // Show video player preview
+                const url = URL.createObjectURL(file);
+                previewVideo.src = url;
+                previewVideo.classList.remove('hidden');
+                previewContainer.classList.remove('hidden');
             } else {
-                fileMessage.textContent = "Please select a valid image or audio file.";
+                fileMessage.textContent = "Please select a valid image, audio, or video file.";
                 previewContainer.classList.add('hidden');
             }
         }
@@ -103,6 +111,7 @@ function removeImage(prefix) {
     const previewContainer = document.getElementById(`${prefix}-preview-container`);
     const previewImg = document.getElementById(`${prefix}-preview`);
     const previewAudio = document.getElementById(`${prefix}-preview-audio`);
+    const previewVideo = document.getElementById(`${prefix}-preview-video`);
     const dropArea = fileInput.closest('.file-drop-area');
     const fileMessage = dropArea.querySelector('.file-message');
 
@@ -116,6 +125,10 @@ function removeImage(prefix) {
     // Clear audio preview
     previewAudio.src = "";
     previewAudio.classList.add('hidden');
+
+    // Clear video preview
+    previewVideo.src = "";
+    previewVideo.classList.add('hidden');
 
     // Hide container
     previewContainer.classList.add('hidden');
