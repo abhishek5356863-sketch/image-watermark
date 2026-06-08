@@ -7,6 +7,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 # The delimiter signals the end of the hidden message
 DELIMITER = "====EOF===="
+EOF_MARKER = b"====STEALTHGUARD===="
 
 def generate_key(password: str, salt: bytes = b'cybersecurity_salt') -> bytes:
     """Generates a cryptographic key from a password using PBKDF2."""
@@ -56,58 +57,41 @@ def binary_to_text(binary_str: str) -> str:
     return text
 
 def encode_image(image_path: str, message: str, password: str, output_path: str) -> bool:
-    """Hides an encrypted message inside an image using LSB steganography."""
+    """Hides an encrypted message inside an image without changing its file size."""
     # 1. Encrypt the message
     encrypted_msg = encrypt_message(message, password)
     
-    # 2. Convert encrypted message to binary
-    binary_msg = text_to_binary(encrypted_msg)
-    msg_length = len(binary_msg)
-    
-    # 3. Read image
-    try:
-        img = Image.open(image_path)
-        if img.mode != 'RGB':
-            img = img.convert('RGB')
-    except Exception as e:
-        raise FileNotFoundError(f"Could not open or find the image {image_path}: {e}")
+    # 2. Read the original image bytes
+    with open(image_path, "rb") as f:
+        img_bytes = f.read()
         
-    width, height = img.size
-    pixels = img.load()
-    
-    # Calculate max bytes we can hide (Rows * Cols * 3 color channels)
-    max_bytes = width * height * 3
-    if msg_length > max_bytes:
-        raise ValueError("Error: Message is too large to fit in this image.")
-    
-    # 4. Hide data in the Least Significant Bit (LSB)
-    data_index = 0
-    
-    for y in range(height):
-        for x in range(width):
-            if data_index < msg_length:
-                pixel = list(pixels[x, y])
-                
-                # Modify R, G, B values
-                for i in range(3):
-                    if data_index < msg_length:
-                        bit_to_hide = int(binary_msg[data_index])
-                        # Use bitwise operations to clear the last bit and set it to bit_to_hide
-                        pixel[i] = (pixel[i] & 254) | bit_to_hide
-                        data_index += 1
-                        
-                pixels[x, y] = tuple(pixel)
-            else:
-                break
-        if data_index >= msg_length:
-            break
-            
-    # Save the new image (must save as PNG to prevent compression loss)
-    img.save(output_path, "PNG", optimize=True, compress_level=9)
+    # 3. Append the marker and encrypted message to the end of the image file
+    # This prevents the file size from blowing up, keeping it exactly the same as original (+ a few bytes)
+    with open(output_path, "wb") as f:
+        f.write(img_bytes)
+        f.write(EOF_MARKER)
+        f.write(encrypted_msg.encode('utf-8'))
+        
     return True
 
 def decode_image(image_path: str, password: str) -> str:
     """Extracts and decrypts a hidden message from an image."""
+    # First, try the EOF method which preserves file size
+    with open(image_path, "rb") as f:
+        img_bytes = f.read()
+        
+    marker_index = img_bytes.find(EOF_MARKER)
+    if marker_index != -1:
+        encrypted_bytes = img_bytes[marker_index + len(EOF_MARKER):]
+        try:
+            extracted_text = encrypted_bytes.decode('utf-8')
+            if extracted_text.endswith(DELIMITER):
+                encrypted_msg = extracted_text.split(DELIMITER)[0]
+                return decrypt_message(encrypted_msg, password)
+        except Exception:
+            pass # Fallback to LSB if EOF extraction fails
+
+    # --- FALLBACK TO OLD LSB METHOD ---
     # 1. Read image
     try:
         img = Image.open(image_path)

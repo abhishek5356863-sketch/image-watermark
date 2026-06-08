@@ -130,8 +130,9 @@ def handle_encode():
         input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(input_path)
         
-        # Output must be PNG to avoid losing LSB data due to compression
-        output_filename = f"secret_{filename.rsplit('.', 1)[0]}.png"
+        # Preserve original extension since EOF steganography doesn't alter compression
+        ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'png'
+        output_filename = f"secret_{filename.rsplit('.', 1)[0]}.{ext}"
         output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
         
         try:
