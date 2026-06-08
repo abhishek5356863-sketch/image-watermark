@@ -103,7 +103,7 @@ def encode_image(image_path: str, message: str, password: str, output_path: str)
             break
             
     # Save the new image (must save as PNG to prevent compression loss)
-    img.save(output_path, "PNG")
+    img.save(output_path, "PNG", optimize=True, compress_level=9)
     return True
 
 def decode_image(image_path: str, password: str) -> str:

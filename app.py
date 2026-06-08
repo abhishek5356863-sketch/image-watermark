@@ -56,7 +56,7 @@ def index():
 def register():
     """Handles user registration."""
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email').strip() if request.form.get('email') else ''
         password = request.form.get('password')
         
         if User.query.filter_by(email=email).first():
@@ -74,7 +74,7 @@ def register():
 def login():
     """Handles user login."""
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email').strip() if request.form.get('email') else ''
         password = request.form.get('password')
         
         user = User.query.filter_by(email=email).first()

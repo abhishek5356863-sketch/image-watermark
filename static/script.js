@@ -85,6 +85,25 @@ function togglePassword(inputId) {
     }
 });
 
+// Function to remove selected image and reset preview
+function removeImage(prefix) {
+    const fileInput = document.getElementById(`${prefix}-image`);
+    const previewContainer = document.getElementById(`${prefix}-preview-container`);
+    const previewImg = document.getElementById(`${prefix}-preview`);
+    const dropArea = fileInput.closest('.file-drop-area');
+    const fileMessage = dropArea.querySelector('.file-message');
+
+    // Clear input
+    fileInput.value = "";
+    
+    // Clear preview
+    previewImg.src = "#";
+    previewContainer.classList.add('hidden');
+    
+    // Reset message
+    fileMessage.textContent = "or drag & drop";
+}
+
 // Setup button loading states
 function setLoading(btnId, isLoading) {
     const btn = document.getElementById(btnId);

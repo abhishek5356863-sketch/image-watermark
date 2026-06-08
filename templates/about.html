@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/static/landing.css">
     <style>
         .page-content {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 4rem auto;
             padding: 3rem 5%;
             background: rgba(18, 22, 38, 0.6);
@@ -50,102 +50,140 @@
         }
 
         .dev-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-            margin-top: 3rem;
-            justify-content: center;
-        }
-
-        /* Make the 3rd card (Yuvaraj) span both columns and center it */
-        .dev-card:nth-child(3) {
-            grid-column: 1 / span 2;
-            justify-self: center;
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .dev-card {
             display: flex;
-            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 4rem;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+
+        .team-member {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .dev-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--primary);
-        }
-
-        .dev-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 15px;
-            overflow: visible;
-            flex-shrink: 0;
-            perspective: 1000px;
-        }
-
-        .dev-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-            transform: rotateY(-20deg) rotateX(10deg);
+            text-align: center;
             transition: transform 0.3s ease;
         }
 
-        .dev-card:hover .dev-photo img {
-            transform: rotateY(0deg) rotateX(0deg);
+        .team-member:hover {
+            transform: translateY(-10px);
         }
 
-        .dev-info {
-            text-align: left;
+        .member-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            padding: 6px;
+            border: 3px solid #545454;
+            margin-bottom: 25px;
+            position: relative;
+            background: transparent;
         }
 
-        .dev-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
+        .team-member.color-orange .member-photo {
+            border-color: #f27921;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .member-bar {
+            width: 100px;
+            height: 10px;
+            background-color: #545454;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .team-member.color-orange .member-bar {
+            background-color: #f27921;
+        }
+
+        .member-bar::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #545454;
+        }
+
+        .team-member.color-orange .member-bar::after {
+            border-top-color: #f27921;
+        }
+
+        .member-info h3 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
             color: #fff;
         }
 
-        .dev-info p {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .member-info p {
+            font-size: 0.85rem;
             color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            min-height: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #545454;
+            color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .dev-info a {
-            color: inherit;
+            justify-content: center;
             text-decoration: none;
-            transition: var(--transition);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .dev-info a:hover {
-            color: var(--primary);
+        .team-member.color-orange .social-icon {
+            background-color: #f27921;
         }
 
-        .dev-icon {
-            color: var(--primary);
-            font-size: 1rem;
-            width: 18px;
+        .social-icon:hover {
+            transform: scale(1.15);
+            opacity: 0.9;
         }
 
         @media (max-width: 900px) {
             .dev-grid {
-                grid-template-columns: 1fr;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 40px;
+            }
+            .team-member {
+                min-width: 200px;
+                flex: 0 0 calc(33.333% - 40px);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .team-member {
+                flex: 0 0 calc(50% - 40px);
             }
         }
     </style>
@@ -195,100 +233,86 @@
 
         <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 3rem 0;">
 
-        <h2>Meet the Developers</h2>
+        <h2 style="text-align: center; margin-bottom: 2rem;">Meet the Developers</h2>
+        
         <div class="dev-grid">
-            <!-- Abhishek's Profile -->
-            <div class="dev-card">
-                <div class="dev-photo">
+            <!-- Abhishek -->
+            <div class="team-member color-gray">
+                <div class="member-photo">
                     <img src="{{ url_for('static', filename='abhishek.jpeg') }}" alt="Abhishek">
                 </div>
-                <div class="dev-info">
+                <div class="member-bar"></div>
+                <div class="member-info">
                     <h3>Abhishek</h3>
                     <p>Lead Developer & Security Researcher</p>
-                    <p>
-                        <span class="dev-icon">📧</span>
-                        <a href="mailto:abhishek5356863@gmail.com">abhishekhacker@gmail.com</a>
-                    </p>
-                    <p>
-                        <span class="dev-icon">📱</span>
-                        <a href="tel:+919441395701">+91 7777777777</a>
-                    </p>
+                    <div class="social-links">
+                        <a href="mailto:abhishekhacker@gmail.com" class="social-icon" title="Email">📧</a>
+                        <a href="tel:+919441395701" class="social-icon" title="Phone">📱</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Akshata's Profile -->
-            <div class="dev-card">
-                <div class="dev-photo">
+            <!-- Akshata -->
+            <div class="team-member color-orange">
+                <div class="member-photo">
                     <img src="{{ url_for('static', filename='akshata.jpeg') }}" alt="Akshata">
                 </div>
-                <div class="dev-info">
+                <div class="member-bar"></div>
+                <div class="member-info">
                     <h3>Akshata</h3>
                     <p>Security Analyst & System Designer</p>
-                    <p>
-                        <span class="dev-icon">📧</span>
-                        <a href="mailto:akshata@gmail.com">akshata@gmail.com</a>
-                    </p>
-                    <p>
-                        <span class="dev-icon">📱</span>
-                        <a href="tel:+919353009090">+91 8888888888</a>
-                    </p>
+                    <div class="social-links">
+                        <a href="mailto:akshata@gmail.com" class="social-icon" title="Email">📧</a>
+                        <a href="tel:+919353009090" class="social-icon" title="Phone">📱</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Yuvraj's Profile -->
-            <div class="dev-card">
-                <div class="dev-photo">
+            <!-- Yuvraj -->
+            <div class="team-member color-gray">
+                <div class="member-photo">
                     <img src="{{ url_for('static', filename='yuvraj.jpeg') }}" alt="Yuvraj">
                 </div>
-                <div class="dev-info">
+                <div class="member-bar"></div>
+                <div class="member-info">
                     <h3>Yuvraj</h3>
                     <p>Full Stack Developer & AI Specialist</p>
-                    <p>
-                        <span class="dev-icon">📧</span>
-                        <a href="mailto:yuvraj@gmail.com">yuvraj@gmail.com</a>
-                    </p>
-                    <p>
-                        <span class="dev-icon">📱</span>
-                        <a href="tel:+916364680118">+91 1111111111</a>
-                    </p>
+                    <div class="social-links">
+                        <a href="mailto:yuvraj@gmail.com" class="social-icon" title="Email">📧</a>
+                        <a href="tel:+916364680118" class="social-icon" title="Phone">📱</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Vasanth's Profile -->
-            <div class="dev-card">
-                <div class="dev-photo">
+            <!-- Vasanth -->
+            <div class="team-member color-orange">
+                <div class="member-photo">
                     <img src="{{ url_for('static', filename='vasanth.jpeg') }}" alt="Vasanth">
                 </div>
-                <div class="dev-info">
+                <div class="member-bar"></div>
+                <div class="member-info">
                     <h3>Vasanth</h3>
                     <p>Cybersecurity Engineer & Network Architect</p>
-                    <p>
-                        <span class="dev-icon">📧</span>
-                        <a href="mailto:vasanth@gmail.com">vasanth@gmail.com</a>
-                    </p>
-                    <p>
-                        <span class="dev-icon">📱</span>
-                        <a href="tel:+917670849773">+91 4444444444</a>
-                    </p>
+                    <div class="social-links">
+                        <a href="mailto:vasanth@gmail.com" class="social-icon" title="Email">📧</a>
+                        <a href="tel:+917670849773" class="social-icon" title="Phone">📱</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Chanda's Profile -->
-            <div class="dev-card">
-                <div class="dev-photo">
+            <!-- Chanda -->
+            <div class="team-member color-gray">
+                <div class="member-photo">
                     <img src="{{ url_for('static', filename='chanda.jpeg') }}" alt="Chanda">
                 </div>
-                <div class="dev-info">
+                <div class="member-bar"></div>
+                <div class="member-info">
                     <h3>Chanda</h3>
                     <p>Backend Developer & Database Architect</p>
-                    <p>
-                        <span class="dev-icon">📧</span>
-                        <a href="mailto:chanda@gmail.com">chanda@gmail.com</a>
-                    </p>
-                    <p>
-                        <span class="dev-icon">📱</span>
-                        <a href="tel:+916361938840">+91 9999999999</a>
-                    </p>
+                    <div class="social-links">
+                        <a href="mailto:chanda@gmail.com" class="social-icon" title="Email">📧</a>
+                        <a href="tel:+916361938840" class="social-icon" title="Phone">📱</a>
+                    </div>
                 </div>
             </div>
         </div>
