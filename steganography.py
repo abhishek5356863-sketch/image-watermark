@@ -56,33 +56,33 @@ def binary_to_text(binary_str: str) -> str:
             text += chr(int(byte, 2))
     return text
 
-def encode_image(image_path: str, message: str, password: str, output_path: str) -> bool:
-    """Hides an encrypted message inside an image without changing its file size."""
+def encode_media(media_path: str, message: str, password: str, output_path: str) -> bool:
+    """Hides an encrypted message inside an image or audio file without changing its file size."""
     # 1. Encrypt the message
     encrypted_msg = encrypt_message(message, password)
     
-    # 2. Read the original image bytes
-    with open(image_path, "rb") as f:
-        img_bytes = f.read()
+    # 2. Read the original media bytes
+    with open(media_path, "rb") as f:
+        media_bytes = f.read()
         
-    # 3. Append the marker and encrypted message to the end of the image file
+    # 3. Append the marker and encrypted message to the end of the media file
     # This prevents the file size from blowing up, keeping it exactly the same as original (+ a few bytes)
     with open(output_path, "wb") as f:
-        f.write(img_bytes)
+        f.write(media_bytes)
         f.write(EOF_MARKER)
         f.write(encrypted_msg.encode('utf-8'))
         
     return True
 
-def decode_image(image_path: str, password: str) -> str:
-    """Extracts and decrypts a hidden message from an image."""
+def decode_media(media_path: str, password: str) -> str:
+    """Extracts and decrypts a hidden message from an image or audio file."""
     # First, try the EOF method which preserves file size
-    with open(image_path, "rb") as f:
-        img_bytes = f.read()
+    with open(media_path, "rb") as f:
+        media_bytes = f.read()
         
-    marker_index = img_bytes.find(EOF_MARKER)
+    marker_index = media_bytes.find(EOF_MARKER)
     if marker_index != -1:
-        encrypted_bytes = img_bytes[marker_index + len(EOF_MARKER):]
+        encrypted_bytes = media_bytes[marker_index + len(EOF_MARKER):]
         try:
             extracted_text = encrypted_bytes.decode('utf-8')
             if extracted_text.endswith(DELIMITER):
@@ -91,14 +91,14 @@ def decode_image(image_path: str, password: str) -> str:
         except Exception:
             pass # Fallback to LSB if EOF extraction fails
 
-    # --- FALLBACK TO OLD LSB METHOD ---
-    # 1. Read image
+    # --- FALLBACK TO OLD LSB METHOD (IMAGES ONLY) ---
+    # 1. Read image (will fail gracefully for audio files)
     try:
-        img = Image.open(image_path)
+        img = Image.open(media_path)
         if img.mode != 'RGB':
             img = img.convert('RGB')
     except Exception as e:
-        raise FileNotFoundError(f"Could not open or find the image {image_path}: {e}")
+        raise ValueError("No hidden message found in this media file.")
         
     width, height = img.size
     pixels = img.load()

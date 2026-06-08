@@ -26,12 +26,13 @@ function togglePassword(inputId) {
     }
 }
 
-// Image Preview and Drag/Drop Logic for both forms
+// Media Preview and Drag/Drop Logic for both forms (Image + Audio)
 ['encode', 'decode'].forEach(prefix => {
     const fileInput = document.getElementById(`${prefix}-image`);
     const dropArea = fileInput.closest('.file-drop-area');
     const previewContainer = document.getElementById(`${prefix}-preview-container`);
     const previewImg = document.getElementById(`${prefix}-preview`);
+    const previewAudio = document.getElementById(`${prefix}-preview-audio`);
     const fileMessage = dropArea.querySelector('.file-message');
 
     // Handle Drag and Drop visuals
@@ -67,37 +68,56 @@ function togglePassword(inputId) {
     function handleFiles(files) {
         if (files.length > 0) {
             const file = files[0];
+            fileMessage.textContent = file.name;
+
+            // Hide both previews first
+            previewImg.classList.add('hidden');
+            previewAudio.classList.add('hidden');
+
             if (file.type.startsWith('image/')) {
-                fileMessage.textContent = file.name;
-                
-                // Show preview
+                // Show image preview
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     previewImg.src = e.target.result;
+                    previewImg.classList.remove('hidden');
                     previewContainer.classList.remove('hidden');
                 }
                 reader.readAsDataURL(file);
+            } else if (file.type.startsWith('audio/')) {
+                // Show audio player preview
+                const url = URL.createObjectURL(file);
+                previewAudio.src = url;
+                previewAudio.classList.remove('hidden');
+                previewContainer.classList.remove('hidden');
             } else {
-                fileMessage.textContent = "Please select a valid image file.";
+                fileMessage.textContent = "Please select a valid image or audio file.";
                 previewContainer.classList.add('hidden');
             }
         }
     }
 });
 
-// Function to remove selected image and reset preview
+// Function to remove selected media and reset preview
 function removeImage(prefix) {
     const fileInput = document.getElementById(`${prefix}-image`);
     const previewContainer = document.getElementById(`${prefix}-preview-container`);
     const previewImg = document.getElementById(`${prefix}-preview`);
+    const previewAudio = document.getElementById(`${prefix}-preview-audio`);
     const dropArea = fileInput.closest('.file-drop-area');
     const fileMessage = dropArea.querySelector('.file-message');
 
     // Clear input
     fileInput.value = "";
     
-    // Clear preview
+    // Clear image preview
     previewImg.src = "#";
+    previewImg.classList.add('hidden');
+
+    // Clear audio preview
+    previewAudio.src = "";
+    previewAudio.classList.add('hidden');
+
+    // Hide container
     previewContainer.classList.add('hidden');
     
     // Reset message
@@ -144,7 +164,7 @@ document.getElementById('encode-form').addEventListener('submit', async (e) => {
             const downloadUrl = window.URL.createObjectURL(blob);
             
             // Extract filename from header if possible, else default
-            let filename = "secret_image.png";
+            let filename = "secret_media";
             const disposition = response.headers.get('content-disposition');
             if (disposition && disposition.indexOf('attachment') !== -1) {
                 const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -164,17 +184,16 @@ document.getElementById('encode-form').addEventListener('submit', async (e) => {
             window.URL.revokeObjectURL(downloadUrl);
             document.body.removeChild(a);
             
-            resultDiv.textContent = "Success! Your secure image is downloading.";
+            resultDiv.textContent = "Success! Your secure media file is downloading.";
             resultDiv.classList.add('success');
             resultDiv.classList.remove('hidden');
             
             // Reset form
             e.target.reset();
-            document.getElementById('encode-preview-container').classList.add('hidden');
-            document.querySelector('#encode-section .file-message').textContent = "or drag and drop here";
+            removeImage('encode');
         } else {
             const data = await response.json();
-            throw new Error(data.error || "Failed to encode image");
+            throw new Error(data.error || "Failed to encode media");
         }
     } catch (error) {
         resultDiv.textContent = "Error: " + error.message;
@@ -210,10 +229,10 @@ document.getElementById('decode-form').addEventListener('submit', async (e) => {
             document.getElementById('decrypted-text').textContent = data.message;
             resultBox.classList.remove('hidden');
             
-            // Reset form but keep image preview
+            // Reset form but keep media preview
             document.getElementById('decode-password').value = '';
         } else {
-            throw new Error(data.error || "Failed to decode image");
+            throw new Error(data.error || "Failed to decode media");
         }
     } catch (error) {
         errorDiv.textContent = "Error: " + error.message;

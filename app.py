@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, send_file, jsonify, session, 
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from steganography import encode_image, decode_image
+from steganography import encode_media, decode_media
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'stealthguard-super-secret-key'
@@ -35,7 +35,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'bmp', 'mp3', 'wav', 'ogg', 'flac', 'm4a'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -113,15 +113,15 @@ def handle_encode():
     """Handles the API request to hide a message in an image."""
     if 'user_id' not in session:
         return jsonify({'error': 'Unauthorized. Please log in.'}), 401
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image uploaded'}), 400
+    if 'file' not in request.files:
+        return jsonify({'error': 'No media uploaded'}), 400
         
-    file = request.files['image']
+    file = request.files['file']
     message = request.form.get('message')
     password = request.form.get('password')
     
     if file.filename == '':
-        return jsonify({'error': 'No image selected'}), 400
+        return jsonify({'error': 'No media selected'}), 400
     if not message or not password:
         return jsonify({'error': 'Message and password are required'}), 400
         
@@ -136,7 +136,7 @@ def handle_encode():
         output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
         
         try:
-            encode_image(input_path, message, password, output_path)
+            encode_media(input_path, message, password, output_path)
             # Return the file directly for download
             return send_file(output_path, as_attachment=True, download_name=output_filename)
         except Exception as e:
@@ -153,14 +153,14 @@ def handle_decode():
     """Handles the API request to extract a message from an image."""
     if 'user_id' not in session:
         return jsonify({'error': 'Unauthorized. Please log in.'}), 401
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image uploaded'}), 400
+    if 'file' not in request.files:
+        return jsonify({'error': 'No media uploaded'}), 400
         
-    file = request.files['image']
+    file = request.files['file']
     password = request.form.get('password')
     
     if file.filename == '':
-        return jsonify({'error': 'No image selected'}), 400
+        return jsonify({'error': 'No media selected'}), 400
     if not password:
         return jsonify({'error': 'Password is required'}), 400
         
@@ -170,7 +170,7 @@ def handle_decode():
         file.save(input_path)
         
         try:
-            secret_message = decode_image(input_path, password)
+            secret_message = decode_media(input_path, password)
             return jsonify({'message': secret_message})
         except Exception as e:
             return jsonify({'error': str(e)}), 400

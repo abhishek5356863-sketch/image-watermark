@@ -45,7 +45,9 @@
                 <h3>Encryption Standard</h3>
                 <p>AES-256 via Fernet</p>
                 <h3>Steganography</h3>
-                <p>Lossless LSB Encoding</p>
+                <p>EOF Stealth Encoding</p>
+                <h3>Supported Media</h3>
+                <p>Images & Audio Files</p>
                 <div class="security-level">
                     <span>Security Level</span>
                     <span class="level-high">Military Grade</span>
@@ -58,22 +60,23 @@
             <section id="encode-section" class="active-section glass-panel">
                 <div class="panel-header">
                     <h2>Encode Payload</h2>
-                    <p>Embed encrypted text invisibly within an image.</p>
+                    <p>Embed encrypted text invisibly within an image or audio file.</p>
                 </div>
                 
                 <form id="encode-form">
                     <div class="form-grid">
                         <div class="input-group full-width">
-                            <label for="encode-image">Target Image (PNG, JPG, BMP)</label>
+                            <label for="encode-image">Target Media (Image/Audio)</label>
                             <div class="file-drop-area" id="encode-drop">
-                                <div class="drop-icon">🖼️</div>
+                                <div class="drop-icon">📁</div>
                                 <span class="choose-file-btn">Browse Files</span>
                                 <span class="file-message">or drag & drop</span>
-                                <input class="file-input" type="file" id="encode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                                <input class="file-input" type="file" id="encode-image" name="file" accept="image/*, audio/*" required>
                             </div>
                             <div id="encode-preview-container" class="preview-container hidden">
-                                <img id="encode-preview" src="#" alt="Preview">
-                                <button type="button" class="remove-image-btn" onclick="removeImage('encode')" title="Remove Image">✖</button>
+                                <img id="encode-preview" src="#" alt="Preview" class="hidden">
+                                <audio id="encode-preview-audio" controls class="hidden" style="width: 100%; margin-top: 10px;"></audio>
+                                <button type="button" class="remove-image-btn" onclick="removeImage('encode')" title="Remove Media">✖</button>
                             </div>
                         </div>
 
@@ -105,22 +108,23 @@
             <section id="decode-section" class="hidden-section glass-panel">
                 <div class="panel-header">
                     <h2>Extract & Decrypt</h2>
-                    <p>Recover hidden payloads from watermarked images.</p>
+                    <p>Recover hidden payloads from watermarked media.</p>
                 </div>
 
                 <form id="decode-form">
                     <div class="form-grid">
                         <div class="input-group full-width">
-                            <label for="decode-image">Watermarked Image (PNG only)</label>
+                            <label for="decode-image">Watermarked Media</label>
                             <div class="file-drop-area" id="decode-drop">
                                 <div class="drop-icon">🔍</div>
                                 <span class="choose-file-btn">Browse Files</span>
                                 <span class="file-message">or drag & drop</span>
-                                <input class="file-input" type="file" id="decode-image" name="image" accept="image/png, image/jpeg, image/bmp" required>
+                                <input class="file-input" type="file" id="decode-image" name="file" accept="image/*, audio/*" required>
                             </div>
                             <div id="decode-preview-container" class="preview-container hidden">
-                                <img id="decode-preview" src="#" alt="Preview">
-                                <button type="button" class="remove-image-btn" onclick="removeImage('decode')" title="Remove Image">✖</button>
+                                <img id="decode-preview" src="#" alt="Preview" class="hidden">
+                                <audio id="decode-preview-audio" controls class="hidden" style="width: 100%; margin-top: 10px;"></audio>
+                                <button type="button" class="remove-image-btn" onclick="removeImage('decode')" title="Remove Media">✖</button>
                             </div>
                         </div>
 
